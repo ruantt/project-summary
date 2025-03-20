@@ -1,0 +1,104 @@
+﻿<!doctype html>
+<html class="no-js" lang="">
+<div th:replace="common/topnew">
+
+</div>
+
+
+<!-- main-area -->
+<main>
+
+    <!-- breadcrumb-area -->
+    <div class="breadcrumb-area breadcrumb-bg-two">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/catalog/view">Home</a></li>
+                                <li class="breadcrumb-item">
+                                    <a th:href="@{'/catalog/viewCategory?categoryId='+${category.categoryId}}"  th:text="${category.name}"></a>
+                                </li>
+                                <li class="breadcrumb-item">
+                                    <a th:href="@{'/catalog/viewProduct?productId='+${product.productId}}" th:text="${product.name}"></a>
+                                </li>
+                                <li class="breadcrumb-item active" th:text="${item.itemId}">
+                                </li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area-end -->
+
+    <!-- shop-area -->
+    <section class="shop--area pt-90 pb-90">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="shop-top-meta mb-30">
+                        <div class="row">
+                            <div class="col-md-6 col-sm-7">
+                                <div class="shop-top-left">
+                                    <ul>
+                                        <li><a href="#"><i class="fas fa-bars"></i><text th:text="${item.itemId}"> Product Name</text></a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="shop-products-wrap">
+                        <div class="row justify-content-center">
+                                <div class="col-xl-5 col-md-6 col-sm-8">
+                                    <div class="sp-product-item">
+                                        <div class="sp-product-thumb">
+                                                <span th:utext="${product.description}"></span>
+                                        </div>
+                                        <div class="sp-product-content">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <h6 class="title">
+                                                <span>Item ID:</span>
+                                                <a th:href="@{'/catalog/viewItem?itemId='+${item.itemId}}" th:text="${item.itemId}">
+                                                    Uncle Orange Bens Ready Pice
+                                                </a>
+                                            </h6>
+                                            <h6 class="title">
+                                                <span>Description:</span>
+                                                <span th:text="${item.attribute1}+','+${product.name}"></span>
+                                            </h6>
+                                            <h6>
+                                                <span class="product-status" th:if="${item.quantity} gt 0" th:text="${item.quantity}+' in stock.'"></span>
+                                            </h6>
+                                            <h6 class="title">
+                                                <p th:text="'$'+${item.listPrice}"></p>
+                                            </h6>
+                                            <a th:href="@{'/cart/addItemToCart?workingItemId='+${item.itemId}}" class="btn">add to cart</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- shop-area-end -->
+
+</main>
+<!-- main-area-end -->
+
+<div th:replace="common/bottomnew">
+
+</div>
+</body>
+</html>

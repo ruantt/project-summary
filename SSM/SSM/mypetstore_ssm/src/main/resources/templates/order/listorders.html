@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
+    <style>
+        #Content
+        {
+            background-color: grey;
+            border-radius: 10px;
+            box-shadow: 0 14px 28px #b9bbbe,
+            0 10px 10px #B9C1CA;
+            position: relative;
+            overflow: hidden;
+            width: 500px;
+            max-width: 100%;
+            /*min-height: 480px;*/
+            margin-left: 100px;
+        }
+        .images_div{
+            position: absolute;
+            border-radius: 10px;
+            opacity: 0.8;
+            animation: fadeInBig 1.5s 0s linear forwards;
+            -webkit-animation: fadeInBig 1.5s 0s linear forwards;
+            width: 100%;
+            height:100%;
+        }
+        @keyframes fadeInBig{
+            from{opacity: 0;transform: scale(2.5);}
+            to{opacity: 0.8;transform: scale(1);}
+        }
+        .list-page {text-align:center;padding: 15px 15px;}
+        .mws-panel-content {background: #eee;}
+        .pagination {margin:0 !important;padding: 10px 10px;box-shadow: 0px 1px 2px 0px #E2E2E2;background: #fff;}
+        .pagination .item{margin:0px 2px;border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;  width: 20px;}
+        .pagination .item_start_end{margin:0px 2px;border:1px solid #e6e6e6;padding: 3px 8px;display: inline-block;  width: 55px;}
+        .pagination .active{background-color: #46A3FF;color: #fff;}
+        .pagination .disabled{color: #aaa;}
+        .item_start_end
+        {
+            width: 35px;
+            height:25px;
+            border: 1px solid #f4f4f4;
+            /*边框合并*/
+            margin:0 0 -1px -1px;
+            position: relative;
+            z-index: 0;
+        }
+        .item{
+            width: 20px;
+            height:25px;
+            border: 1px solid #f4f4f4;
+            /*边框合并*/
+            margin:0 0 -1px -1px;
+            position: relative;
+            z-index: 0;
+        }
+        .item:hover{
+            border-color: #FF5000;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+<div th:replace="common/topnew">
+
+</div>
+
+<div><img class="images_div" src="../img/slider/cat2_slider.jpg" /></div>
+<div id="Content"  >
+
+
+    <h2>My Orders</h2>
+
+    <table class="table table-striped ">
+        <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Total Price</th>
+        </tr>
+        <tr th:colspan="3" th:if="${session.orderList.size() eq 0}">
+            <!--            <tr th:if="${#arrays.length(session.orderList) eq 0}">-->
+            <td colspan="3" align="center">No order</td>
+        </tr>
+        <tr  th:each="order:${session.orderList}">
+            <td>
+                <a th:href="@{'/order/vieworder?orderId='+${order?.orderId}}" th:text="${order?.orderId}"> </a>
+            </td>
+            <td  th:text="${#dates.format(order?.orderDate, 'yyyy/MM/dd hh:mm:ss')}">
+            </td>
+            <td th:text="'$ '+${order?.totalPrice}">
+            </td>
+        </tr>
+    </table>
+    <!--显示分页信息-->
+    <div class="modal-footer no-margin-top mws-panel-content">
+        <!--        <div class="col-md-6">-->
+        <!--            当前第 [[${pageInfo.pageNum}]]页,共 [[${pageInfo.pages}]] 页.一共 [[${pageInfo.total}]] 条记录-->
+        <!--        </div>-->
+        <div class="list-page">
+            <ul class="pagination pull-right no-margin ">
+                <li th:if="${pageInfo.hasPreviousPage}" class="item_start_end">
+                    <a th:href="'/order/listorders?pageNum=1'">首页</a>
+                </li>
+
+                <li class="prev item" th:if="${pageInfo.hasPreviousPage}">
+                    <a th:href="'/order/listorders?pageNum='+${pageInfo.prePage}">
+                        <i class="ace-icon fa fa-angle-double-left"></i>
+                    </a>
+                </li>
+                <!--遍历条数-->
+                <li class="item" th:each="nav:${pageInfo.navigatepageNums}">
+                    <a th:href="'/order/listorders?pageNum='+${nav}" th:text="${nav}" th:if="${nav != pageInfo.pageNum}"></a>
+                    <span style="font-weight: bold;background: #6faed9;" th:if="${nav == pageInfo.pageNum}" th:text="${nav}" ></span>
+                </li>
+
+                <li class="next item" th:if="${pageInfo.hasNextPage}">
+                    <a th:href="'/order/listorders?pageNum='+${pageInfo.nextPage}">
+                        <i class="ace-icon fa fa-angle-double-right"></i>
+                    </a>
+                </li>
+
+                <li class="item_start_end">
+                    <a th:href="'/order/listorders?pageNum='+${pageInfo.pages}">尾页</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!--    <div>当前页号：<span th:text="${pageInfo.pageNum}"></span></div>-->
+    <!--    <div>每页条数：<span th:text="${pageInfo.pageSize}"></span></div>-->
+    <!--    <div>起始行号：<span th:text="${pageInfo.startRow}"></span></div>-->
+    <!--    <div>终止行号：<span th:text="${pageInfo.endRow}"></span></div>-->
+    <!--    <div>总结果数：<span th:text="${pageInfo.total}"></span></div>-->
+    <!--    <div>总页数：<span th:text="${pageInfo.pages}"></span></div>-->
+    <!--    <hr />-->
+    <!--    <div>是否为第一页：<span th:text="${pageInfo.isFirstPage}"></span></div>-->
+    <!--    <div>是否为最后一页：<span th:text="${pageInfo.isLastPage}"></span></div>-->
+    <!--    <div>是否有前一页：<span th:text="${pageInfo.hasPreviousPage}"></span></div>-->
+    <!--    <div>是否有下一页：<span th:text="${pageInfo.hasNextPage}"></span></div>-->
+</div>
+<div th:replace="common/bottomnew">
+
+</div>
+
+<!-- jQuery -->
+<script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="http://www.jq22.com/jquery/bootstrap-3.3.4.js"></script>
+
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../vendor/metisMenu/metisMenu.min.js"></script>
+<script src="../js/vsclick-min.js"></script>
+<script>
+    let drop2 = new VsClick({
+        dom: 'drop2',
+        timer: 3000,
+        emoji: ['🐩', '🐇', '🐟', '🦉', '🐶', '🐼', '🐾'],
+        spring: true
+    })
+</script>
+<script src="../js/login.js"></script>
+</body>
+</html>
