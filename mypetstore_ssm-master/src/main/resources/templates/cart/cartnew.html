@@ -1,0 +1,119 @@
+﻿<!doctype html>
+<html class="no-js" lang="">
+<div th:replace="common/topnew">
+
+</div>
+
+
+<!-- main-area -->
+<main>
+
+    <!-- breadcrumb-area -->
+    <div class="breadcrumb-area breadcrumb-bg-two">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/catalog/view">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Cart</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area-end -->
+
+    <!-- cart-area -->
+    <div class="cart-area pt-90 pb-90">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-xl-7">
+                    <div class="cart-wrapper">
+                        <div class="table-responsive">
+                            <form action="/cart/updatecart" method="post">
+                                <table class="table mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="product-thumbnail"></th>
+                                        <th class="product-name">Item</th>
+                                        <th class="product-price">Price</th>
+                                        <th class="product-quantity">QUANTITY</th>
+                                        <th class="product-subtotal">SUBTOTAL</th>
+                                        <th class="product-delete"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="cartItem:${session.cart.cartItems}">
+                                        <td class="product-thumbnail"><a
+                                                th:href="@{'/catalog/viewItem?itemId='+${cartItem.item.itemId}}"
+                                                th:utext="${cartItem.item.product.description}"></td>
+                                        <td class="product-name">
+                                            <h4><a th:href="@{'/catalog/viewItem?itemId='+${cartItem.item.itemId}}"
+                                                   th:text="${cartItem.item.itemId}">Orange Bens Vanla</a></h4>
+                                        </td>
+                                        <td class="product-price" th:text="'$'+${cartItem.item.listPrice}">$ 27.00</td>
+                                        <td class="product-quantity">
+                                            <div class="cart--plus--minus">
+                                                <div>
+                                                    <div class="shop-perched-info" style="margin-left: -25px;width: 175px">
+                                                        <div class="sd-cart-wrap">
+                                                                <div class="cart-plus-minus" >
+                                                                    <input th:name="${cartItem.item.itemId}"  th:value="${cartItem.quantity}" >
+                                                                </div>
+                                                        </div>
+                                                    </div>
+<!--                                                    <input  th:value="${cartItem.quantity}" >-->
+<!--                                                    <div class="qtybutton-box">-->
+<!--                                                        <span class="plus"><i class="fas fa-angle-up"></i></span>-->
+<!--                                                        <span class="minus dis"><i class="fas fa-angle-down"></i></span>-->
+<!--                                                    </div>-->
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td class="product-subtotal"><span
+                                                th:text="'$'+${cartItem.total}">$ 27.99</span></td>
+                                        <td class="product-delete"><a
+                                                th:href="@{'/cart/removeItemFromCart?workingItemId='+${cartItem.item.itemId}}"><i
+                                                class="far fa-trash-alt"></i></a></td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <li><input type="submit" style="background-color: orange;border-radius: 20px" class="btn" value="update Cart"/>
+                                </li>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xl-5 col-lg-12">
+                    <div class="shop-cart-total">
+                        <h3 class="title">Cart Totals</h3>
+                        <div class="shop-cart-widget">
+                            <form action="#">
+                                <ul>
+                                    <li class="cart-total-amount"><span>Total Price</span> <span class="amount"
+                                                                                                 th:text="'$'+${session.cart.subTotal}">$ 151.00</span>
+                                    </li>
+
+                                </ul>
+                                <a th:if="${session.cart.numberOfItems gt 0}" th:href="@{/order/neworder}" class="btn">PROCEED
+                                    TO CHECKOUT</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- cart-area-end -->
+
+</main>
+<!-- main-area-end -->
+<div th:replace="common/bottomnew">
+
+</div>
+</body>
+</html>

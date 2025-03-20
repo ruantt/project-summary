@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="org.csu.jpetstore_ssm.persistence.LongCartMapper">
+    <select id="findinlongcart" parameterType="string" resultType="LongCart">
+        select * from longcart where username=#{value}
+    </select>
+    <select id="insertlongcart">
+        insert into longcart values(#{param2},#{param1},1)
+    </select>
+
+    <select id="updatecartquantities">
+        update longcart set quantity=#{param2} where username=#{param3} and itemID=#{param1}
+    </select>
+
+    <delete  id="removecartitem">
+        delete from longcart where username=#{param2} and itemID=#{param1}
+    </delete>
+
+    <select id="incrementQuantityByItemId">
+        update longcart set quantity=quantity+1 where username=#{param1} and itemID=#{param2}
+    </select>
+
+    <delete  id="clearcart">
+        delete from longcart where username=#{param1}
+    </delete>
+
+</mapper>

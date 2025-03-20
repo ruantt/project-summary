@@ -1,0 +1,100 @@
+﻿<!doctype html>
+<html class="no-js" lang="">
+<!-- header-message -->
+<div th:if="${productList.size()==0}" class="header-message-wrap">
+    <div class="container custom-container">
+        <div class="row">
+            <div class="col-12">
+                <div class="top-notify-message">
+                    <p>Don't find any product</p>
+                    <span class="message-remove">X</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- header-message-end -->
+<div th:replace="common/topnew">
+
+</div>
+<!-- main-area -->
+<main>
+
+    <!-- breadcrumb-area -->
+    <div class="breadcrumb-area breadcrumb-bg-two">
+        <div class="container custom-container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="breadcrumb-content">
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="/catalog/view">Home</a></li>
+                                <li th:unless="${category}==null" class="breadcrumb-item"><a th:href="@{'/catalog/viewCategory?categoryId='+${category.categoryId}}"  th:text="${category.name}"></a></li>
+                                <li class="breadcrumb-item active">SearchResult</li>
+                            </ol>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- breadcrumb-area-end -->
+
+    <!-- shop-area -->
+    <section class="shop--area pt-90 pb-90">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <div class="shop-products-wrap">
+<!--                        <div th:if="${session.user}==null">-->
+<!--                            -->
+<!--                        </div>-->
+                        <div th:unless="${productList.size()==0}" class="row justify-content-center">
+                            <tr th:each="product:${productList}">
+                                <div class="col-xl-3 col-md-4 col-sm-6">
+                                    <div class="sp-product-item">
+                                        <div class="sp-product-thumb">
+                                            <a th:href="@{'/catalog/viewProduct?productId='+${product.productId}}">
+                                                <span th:utext="${product.description}"></span>
+                                            </a>
+                                        </div>
+                                        <div class="sp-product-content">
+                                            <div class="rating">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                            <h6 class="title">
+                                                <span>Product ID:</span>
+                                                <a th:href="@{'/catalog/viewProduct?productId='+${product.productId}}" th:text="${product.productId}">
+                                                    Uncle Orange Bens Ready Pice
+                                                </a>
+                                            </h6>
+                                            <h6 class="title">
+                                                <span>Product Name:</span>
+                                                <span  th:text="${product.name}"></span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </tr>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- shop-area-end -->
+
+</main>
+<!-- main-area-end -->
+
+
+<div th:replace="common/bottomnew">
+
+</div>
+</body>
+</html>
